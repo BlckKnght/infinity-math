@@ -1,0 +1,39 @@
+a:link, a:visited {
+	text-decoration: none;
+	color: #2D5B73;
+}
+a:hover {
+	text-decoration: none;
+	color: #FFCC00;
+}
+body {
+	font-family: sans;
+    font-size: 14px;
+    background-color: #A7CCE8;
+	margin: 0px;
+}
+#header, #content, #footer {
+	color: #000000;
+    background-color: #D3E5F3;
+    margin: 5px;
+    padding: 5px;
+}
+
+#title {
+    font-size: 24px;
+    padding: 10px;
+}
+
+#subtitle {
+    font-size: 18px;
+    padding: 10px;
+}
+
+#key img {
+    width: 14px;
+    height: 14px;
+}
+
+#chart img {
+    height: 50px;
+}

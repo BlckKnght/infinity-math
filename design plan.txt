@@ -1,0 +1,15 @@
+Infinity Math Dev Plan
+
+v0: Do nothing, just have a site that loads dynamically.
+
+v1: Simple form for BS only: Enter modified BS, B, modified damage, get results in a chart
+
+v2: Slightly better form: Different kinds of tests (normal, ftf, etc). Modifiers are separated from attributes.
+
+v3: Better Math: Handle special ammo types, guts rolls, form uses full model profile
+
+v4: Stored model profiles in DB, asks for modifiers only
+
+v5: Everything is stored. Weapons, range brackets, other modifiers are all handled with drop downs
+
+v6: N vs M dice? Localization/i18n? Requests from the forum?
