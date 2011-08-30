@@ -116,9 +116,16 @@ def ftf_1vN_roll_with_crits(defender_target, attacker_dice, attacker_target):
         unbeatable_chance = (defender_target - attacker_target - 1) / 20 # odds of an "unbeatable"
         if unbeatable_chance:
             roll = normal_roll(attacker_dice, 1) # attacker crits
-            defender_hits[0] += roll[0] # no crits
+            defender_hits[0] += unbeatable_chance * roll[0] # no crits
             for crits in range(1, len(roll)):
                 attacker_hits[crits-1][crits] += unbeatable_chance * roll[crits]
+    # When attacker's target is higher we just need to handle defender crits.
+    # They can only be beaten by attacker crits.
+    else:
+        roll = normal_roll(attacker_dice, 1) # attacker crits
+        defender_hits[1] += 1/20 * roll[0] # no crit
+        for crits in range(1, len(roll)):
+            attacker_hits[crits-1][crits] += 1/20 * roll[crits]
         
     #print ([nothing_happens, defender_hits, attacker_hits])
     
