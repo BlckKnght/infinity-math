@@ -102,13 +102,11 @@ def ftf_1vN_roll_with_crits(defender_target, attacker_dice, attacker_target):
         defender_hits[1] += 1/20 * (19/20)**attacker_dice # defender crits and attacker doesn't
         nothing_happens += 1/20 * (1-(19/20)**attacker_dice) # both players crit, so they cancel
 
-        for defender_roll in range(1, defender_target): # now cancel the ties from lower values
-            roll = normal_roll_with_crits(attacker_dice, defender_roll) # == crits on this roll
-            for hits in range(1, len(roll)):
-                for crits in range(1, hits+1):
-                    ties = 1/20 * roll[hits][crits]
-                    defender_hits[0] -= ties
-                    nothing_happens += ties
+        # now cancel the ties from lower values
+        roll = normal_roll(attacker_dice, 1) # sum of hits == odds of tying on any number
+        ties = (min(attacker_target, defender_target) - 1)/20 * (1 - roll[0])
+        defender_hits[0] -= ties
+        nothing_happens += ties
     # If the defender's target is larger, there's a range of defender rolls that are "unbeatable"
     # by the attacker, except with a crit. The defender's crits can't be beat.
     elif attacker_target < defender_target:
