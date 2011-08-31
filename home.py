@@ -40,7 +40,7 @@ class HomeHandler(webapp.RequestHandler):
                     
                     "range5" : range(1, 6),
                     "range20" : range(1, 21),
-                    "target_mods" : range(-12, 4, 3),
+                    "target_mods" : range(-12, 7, 3),
                     "armor_values" : range(11)
                 }
 
