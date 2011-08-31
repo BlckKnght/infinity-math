@@ -68,6 +68,18 @@ def ftf_1vN_roll_with_crits(defender_target, attacker_dice, attacker_target):
     defender_hits = [0, 0]
     attacker_hits = [[0] * (i+2) for i in range(attacker_dice)]
 
+    # sanity check our arguments
+    if defender_target < 1:
+        roll = normal_roll_with_crits(attacker_dice, attacker_target)
+        nothing_happens = roll[0][0]
+        attacker_hits = roll[1:]
+        return [nothing_happens, [defender_hits], attacker_hits]
+    elif attacker_target < 1:
+        roll = normal_roll_with_crits(1, defender_target)
+        nothing_happens = roll[0][0]
+        defender_hits = roll[1]
+        return [nothing_happens, [defender_hits], attacker_hits]
+    
     #print([nothing_happens, defender_hits, attacker_hits])
 
     # we work through the possible defender rolls, starting with the lowest

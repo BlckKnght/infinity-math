@@ -19,7 +19,7 @@
                 <strong>Active model:</strong>
             </p>
             <p>
-                Attribute (e.g. BS):
+                BS:
                 <select name="attacker_target">
                     {% for i in range20 %}<option value="{{ i }}"{% ifequal i attacker_target %} selected="yes"{% endifequal %}>{{ i }}</option>
                     {% endfor %}
@@ -53,7 +53,7 @@
                 <strong>Reacting Model:</strong>
             </p>
             <p>
-                Attribute (e.g. BS):
+                BS:
                 <select name="defender_target">
                     {% for i in range20 %}<option value="{{ i }}"{% ifequal i defender_target %} selected="yes"{% endifequal %}>{{ i }}</option>
                     {% endfor %}
