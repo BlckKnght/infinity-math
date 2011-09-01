@@ -60,8 +60,8 @@ class HomeHandler(webapp.RequestHandler):
             d_damage = defender_damage - a_armor - a_cover
             a_damage = attacker_damage - d_armor - d_cover
 
-            #logging.warn([d_target, d_damage, defender_ammo,
-            #             attacker_dice, a_target, a_damage, attacker_ammo])
+            logging.warn([d_target, d_damage, defender_ammo,
+                         attacker_dice, a_target, a_damage, attacker_ammo])
 
             results = ftf_1vN_roll_and_save(d_target,
                                             d_damage, defender_ammo,

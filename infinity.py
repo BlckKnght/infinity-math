@@ -1,7 +1,7 @@
 # infinity.py
 
 from __future__ import division
-from collections import defaultdict
+import logging
 
 def binomial_coefficient(n, k):
     if k > n-k:
@@ -163,7 +163,7 @@ def ftf_1vN_roll_with_crits(defender_target, attacker_dice, attacker_target):
     # by the attacker, except with a crit. The defender's crits can't be beat.
     elif attacker_target < defender_target:
         defender_hits[1] += 1/20 # defender crits
-        unbeatable_chance = (defender_target - attacker_target - 1) / 20 # odds of an "unbeatable"
+        unbeatable_chance = (defender_target - attacker_target) / 20 # odds of an "unbeatable"
         if unbeatable_chance:
             roll = normal_roll(attacker_dice, 1) # attacker crits
             defender_hits[0] += unbeatable_chance * roll[0] # no crits
@@ -177,7 +177,7 @@ def ftf_1vN_roll_with_crits(defender_target, attacker_dice, attacker_target):
         for crits in range(1, len(roll)):
             attacker_hits[crits-1][crits] += 1/20 * roll[crits]
         
-    #print ([nothing_happens, defender_hits, attacker_hits])
+    #logging.info([nothing_happens, defender_hits, attacker_hits])
     
     # finally, consider case when the defender's roll fails outright (too high)
     defender_fails = 1 - defender_target / 20
