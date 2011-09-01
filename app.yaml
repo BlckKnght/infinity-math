@@ -1,12 +1,12 @@
 application: infinity-math
-version: 2
+version: 3
 runtime: python
 api_version: 1
 
 handlers:
-- url: /(.*\.(css|png|gif|jpg))
+- url: /(.*\.(js|css|png|gif|jpg))
   static_files: \1
-  upload: (.*\.(css|png|gif|jpg))
+  upload: (.*\.(js|css|png|gif|jpg))
   
 - url: /.*
   script: main.py

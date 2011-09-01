@@ -29,11 +29,46 @@ body {
     font-weight: bold;
 }
 
-#key img {
+.model {
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#calculate { clear: both; }
+
+#key {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#key div {
+    display: inline-block;
     width: 14px;
     height: 14px;
 }
 
-#chart img {
+#chart div {
+    display: inline-block;
     height: 50px;
 }
+
+.d1 { background-color: #b40426; }
+.d2 { background-color: #d0483d; }
+.d3 { background-color: #e67158; }
+
+.draw { background-color: #dcdcdc; }
+
+.a1  { background-color: #3a4cc0; }
+.a2  { background-color: #465dcf; }
+.a3  { background-color: #536fdd; }
+.a4  { background-color: #607fe8; }
+.a5  { background-color: #6d8ff1; }
+.a6  { background-color: #7b9ef8; }
+.a7  { background-color: #89acfd; }
+.a8  { background-color: #97b8fe; }
+.a9  { background-color: #a5c3fe; }
+.a10 { background-color: #b3ccfa; }
+.a11 { background-color: #c0d3f5; }
+.a12 { background-color: #ccd8ed; }

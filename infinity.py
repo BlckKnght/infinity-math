@@ -58,9 +58,49 @@ def armor_save(hits, damage):
 
     return results
 
+NORMAL_AMMO = 0
+DA_AMMO     = 1
+EXP_AMMO    = 2
+T2_AMMO     = 3
 
-def normal_roll_and_save(B, BS, damage):
-    return armor_save(normal_roll_with_crits(B, BS), damage)
+AP_AMMO     = 4
+AP_DA_AMMO  = DA_AMMO | AP_AMMO  #5
+AP_EXP_AMMO = EXP_AMMO | AP_AMMO #6
+AP_T2_AMMO  = T2_AMMO | AP_AMMO  #7
+
+def armor_save_with_special_ammo(hits, damage, ammo):
+    
+    if ammo % AP_AMMO == DA_AMMO:
+        new_hits = [hits[0]] + [[0]*(d+2) for d in range((len(hits)-1)*2)]
+        for h in range(1, len(hits)):
+            for c in range(h+1): # crits count as one crit and one regular hit
+                new_hits[2*h][c] += hits[h][c]
+                
+        hits = new_hits
+        
+    elif ammo % AP_AMMO == EXP_AMMO:
+        new_hits = [hits[0]] + [[0]*(d+2) for d in range((len(hits)-1)*3)]
+        for h in range(1, len(hits)):
+            for c in range(h+1): # crits count as one crit and two regular hits
+                new_hits[3*h][c] += hits[h][c]
+                
+        hits = new_hits
+
+    results = armor_save(hits, damage)
+
+    if ammo % AP_AMMO == T2_AMMO:
+        for i in range(len(results)-1, 0, -1):
+            results.insert(i, 0) # double damage by inserting zeros for all the odd positions
+
+    # prune very low probabily results off the end
+    while (results[-1] < 0.001): # 1/10 of 1%
+        results.pop()
+
+    return results
+
+
+def normal_roll_and_save(B, BS, damage, ammo=0):
+    return armor_save_with_special_ammo(normal_roll_with_crits(B, BS), damage, ammo)
 
 
 def ftf_1vN_roll_with_crits(defender_target, attacker_dice, attacker_target):
@@ -153,12 +193,13 @@ def ftf_1vN_roll_with_crits(defender_target, attacker_dice, attacker_target):
     return [nothing_happens, [defender_hits], attacker_hits]
 
 
-def ftf_1vN_roll_and_save(defender_target, defender_damage,
-                          attacker_dice, attacker_target, attacker_damage):
+def ftf_1vN_roll_and_save(defender_target, defender_damage, defender_ammo,
+                          attacker_dice, attacker_target,
+                          attacker_damage, attacker_ammo):
     hits = ftf_1vN_roll_with_crits(defender_target, attacker_dice, attacker_target)
 
-    defender_wounds = armor_save([[0]] + hits[1], defender_damage)
-    attacker_wounds = armor_save([[0]] + hits[2], attacker_damage)
+    defender_wounds = armor_save_with_special_ammo([[0]] + hits[1], defender_damage, defender_ammo)
+    attacker_wounds = armor_save_with_special_ammo([[0]] + hits[2], attacker_damage, attacker_ammo)
 
     no_wounds = hits[0] + defender_wounds[0] + attacker_wounds[0]
 

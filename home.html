@@ -15,86 +15,124 @@
         <strong>Enter Die Roll Details:</strong>
         <form method="get" id="form">
             <input type="hidden" name="test_type" value="BS" />
-            <p>
+            <div class="model active">
                 <strong>Active model:</strong>
-            </p>
-            <p>
-                BS:
-                <select name="attacker_target">
-                    {% for i in range20 %}<option value="{{ i }}"{% ifequal i attacker_target %} selected="yes"{% endifequal %}>{{ i }}</option>
-                    {% endfor %}
-                </select>
-                Modifiers<span class="attacker_bs"> (excluding cover)</span>:
-                <select name="attacker_target_mod">
-                    {% for i in target_mods %}<option value="{{ i }}"{% ifequal i attacker_target_mod %} selected="yes"{% endifequal %}>{{ i|stringformat:"+d" }}</option>
-                    {% endfor %}
-                </select>
-            </p>
-            <p>
-                <span class="attacker_bs">B:
-                <select name="attacker_dice">
-                    {% for i in range5 %}<option value="{{ i }}"{% ifequal i attacker_dice %} selected="yes"{% endifequal %}>{{ i }}</option>
-                    {% endfor %}
-                </select>
-                Damage:
-                <select name="attacker_damage">
-                    {% for i in range20 %}<option value="{{ i }}"{% ifequal i attacker_damage %} selected="yes"{% endifequal %}>{{ i }}</option>
-                    {% endfor %}
-                </select>
-                Armor:
-                <select name="attacker_armor">
-                    {% for i in armor_values %}<option value="{{ i }}"{% ifequal i attacker_armor %} selected="yes"{% endifequal %}>{{ i }}</option>
-                    {% endfor %}
-                </select>
-                Has cover?
-                <input name="attacker_cover" type="checkbox"{% if attacker_cover %} checked="true"{% endif %} />
-            </p>
-            <p>
+                <p>
+                    BS:
+                    <select name="attacker_target">
+                        {% for i in range20 %}<option value="{{ i }}"{% ifequal i attacker_target %} selected="yes"{% endifequal %}>{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                    Modifiers (excluding cover):
+                    <select name="attacker_target_mod">
+                        {% for i in target_mods %}<option value="{{ i }}"{% ifequal i attacker_target_mod %} selected="yes"{% endifequal %}>{{ i|stringformat:"+d" }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+                <p>
+                    B:
+                    <select name="attacker_dice">
+                        {% for i in range5 %}<option value="{{ i }}"{% ifequal i attacker_dice %} selected="yes"{% endifequal %}>{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                    Damage:
+                    <select name="attacker_damage">
+                        {% for i in range20 %}<option value="{{ i }}"{% ifequal i attacker_damage %} selected="yes"{% endifequal %}>{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                    Ammunition Type:
+                    <select name="attacker_ammo">
+                        <option value="0"{% ifequal 0 attacker_ammo %} selected="yes"{% endifequal %}>Normal</option>
+                        <option value="1"{% ifequal 1 attacker_ammo %} selected="yes"{% endifequal %}>Double Action</option>
+                        <option value="2"{% ifequal 2 attacker_ammo %} selected="yes"{% endifequal %}>Explosive</option>
+                        <option value="3"{% ifequal 3 attacker_ammo %} selected="yes"{% endifequal %}>T2</option>
+                        <option value="4"{% ifequal 4 attacker_ammo %} selected="yes"{% endifequal %}>Armor Piercing</option>
+                        <option value="5"{% ifequal 5 attacker_ammo %} selected="yes"{% endifequal %}>AP+DA Integrated</option>
+                        <option value="6"{% ifequal 6 attacker_ammo %} selected="yes"{% endifequal %}>AP+EXP Integrated</option>
+                    </select>
+                </p>
+                <p>
+                    Armor:
+                    <select name="attacker_armor">
+                        {% for i in armor_values %}<option value="{{ i }}"{% ifequal i attacker_armor %} selected="yes"{% endifequal %}>{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                    Has cover?
+                    <input name="attacker_cover" type="checkbox"{% if attacker_cover %} checked="true"{% endif %} />
+                </p>
+            </div>
+            <div class="model reactive">
                 <strong>Reacting Model:</strong>
-            </p>
-            <p>
-                BS:
-                <select name="defender_target">
-                    {% for i in range20 %}<option value="{{ i }}"{% ifequal i defender_target %} selected="yes"{% endifequal %}>{{ i }}</option>
-                    {% endfor %}
-                </select>
-                Modifiers<span class="attacker_bs"> (excluding cover)</span>:
-                <select name="defender_target_mod">
-                    {% for i in target_mods %}<option value="{{ i }}"{% ifequal i defender_target_mod %} selected="yes"{% endifequal %}>{{ i|stringformat:"+d" }}</option>
-                    {% endfor %}
-                </select>
-            </p>
-            <p>
-                Damage:
-                <select name="defender_damage">
-                    {% for i in range20 %}<option value="{{ i }}"{% ifequal i defender_damage %} selected="yes"{% endifequal %}>{{ i }}</option>
-                    {% endfor %}
-                </select>
-                Armor:
-                <select name="defender_armor">
-                    {% for i in armor_values %}<option value="{{ i }}"{% ifequal i defender_armor %} selected="yes"{% endifequal %}>{{ i }}</option>
-                    {% endfor %}
-                </select>
-                Has cover?
-                <input name="defender_cover" type="checkbox"{% if defender_cover %} checked="true"{% endif %} />
-            </p>
-            <p>
+                <p>
+                    BS:
+                    <select name="defender_target">
+                        {% for i in range20 %}<option value="{{ i }}"{% ifequal i defender_target %} selected="yes"{% endifequal %}>{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                    Modifiers (excluding cover):
+                    <select name="defender_target_mod">
+                        {% for i in target_mods %}<option value="{{ i }}"{% ifequal i defender_target_mod %} selected="yes"{% endifequal %}>{{ i|stringformat:"+d" }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+                <p>
+                    Damage:
+                    <select name="defender_damage">
+                        {% for i in range20 %}<option value="{{ i }}"{% ifequal i defender_damage %} selected="yes"{% endifequal %}>{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                    Ammunition Type:
+                    <select name="defender_ammo">
+                        <option value="0"{% ifequal 0 defender_ammo %} selected="yes"{% endifequal %}>Normal</option>
+                        <option value="1"{% ifequal 1 defender_ammo %} selected="yes"{% endifequal %}>Double Action</option>
+                        <option value="2"{% ifequal 2 defender_ammo %} selected="yes"{% endifequal %}>Explosive</option>
+                        <option value="3"{% ifequal 3 defender_ammo %} selected="yes"{% endifequal %}>T2</option>
+                        <option value="4"{% ifequal 4 defender_ammo %} selected="yes"{% endifequal %}>Armor Piercing</option>
+                        <option value="5"{% ifequal 5 defender_ammo %} selected="yes"{% endifequal %}>AP+DA Integrated</option>
+                        <option value="6"{% ifequal 6 defender_ammo %} selected="yes"{% endifequal %}>AP+EXP Integrated</option>
+                    </select>
+                </p>
+                <p>
+                    Armor:
+                    <select name="defender_armor">
+                        {% for i in armor_values %}<option value="{{ i }}"{% ifequal i defender_armor %} selected="yes"{% endifequal %}>{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                    Has cover?
+                    <input name="defender_cover" type="checkbox"{% if defender_cover %} checked="true"{% endif %} />
+                </p>
+            </div>
+            <div id="calculate">
                 <input type="submit" value="Calculate Results" />
-            </p>
+            </div>
         </form>
         {% if show_results %}
         <div id="results">
             <p>
                 <strong>Results:</strong>
             </p>
-            <p id="key">
+            <div id="key">
                 <strong>Key:</strong>
-                <img src="Red1px.gif" /> = Active model wounded, <img src="White1px.gif" /> = No wounds, 
-                {% for w in attacker_wounds %}<img src="Green1px{{ forloop.revcounter }}.gif" />{% endfor %} = Reacting model wounded (lighter shades indicate more wounds)
-            </p>
-            <div id="chart">
-                <img src="Red1px.gif" width="{% widthratio defender_wounds 1 500 %}px" title="1 wound: {% widthratio defender_wounds 1 100 %}%" /><img src="White1px.gif" width="{% widthratio draw 1 500 %}px" title="No wounds: {% widthratio draw 1 100 %}%"/>{% for w in attacker_wounds %}<img src="Green1px{{ forloop.revcounter }}.gif" width="{% widthratio w 1 500 %}px" title="{{ forloop.counter }} wounds: {% widthratio w 1 100 %}%" />{% endfor %}
+                {% for w in defender_wounds reversed %}<div class="d{{ forloop.counter }}" title="{{ forloop.revcounter }} wound{{ forloop.revcounter|pluralize }}"></div>{% endfor %}
+                = Active model wounded,
+                <div class="draw" title="No wounds"></div> = No wounds, 
+                {% for w in attacker_wounds %}<div class="a{{ forloop.revcounter }}" title="{{ forloop.counter }} wound{{ forloop.counter|pluralize }}"></div>{% endfor %}
+                = Reacting model wounded
             </div>
+            <div id="chart">
+                {% spaceless %}
+                {% for w in defender_wounds reversed %}
+                    <div class="d{{ forloop.counter }}" style="width: {% widthratio w 1 500 %}px;"
+                         title="{{ forloop.revcounter }} wound{{ forloop.revcounter|pluralize }}: {% widthratio w 1 100 %}%"></div>
+                {% endfor %}
+                <div class="draw" style="width : {% widthratio draw 1 500 %}px;" title="No wounds: {% widthratio draw 1 100 %}%"></div>
+                {% for w in attacker_wounds %}
+                    <div class="a{{ forloop.revcounter }}" style="width: {% widthratio w 1 500 %}px;"
+                         title="{{ forloop.counter }} wound{{ forloop.counter|pluralize }}: {% widthratio w 1 100 %}%"></div>
+                {% endfor %}
+                {% endspaceless %}
+            </div>
+            <p>Hover over colored blocks to see details.</p>
         </div>
         {% endif %}
     </div>
