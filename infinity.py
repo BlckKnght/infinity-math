@@ -93,7 +93,7 @@ def armor_save_with_special_ammo(hits, damage, ammo):
             results.insert(i, 0) # double damage by inserting zeros for all the odd positions
 
     # prune very low probabily results off the end
-    while (results and results[-1] < 0.001): # 1/10 of 1%
+    while (len(results) > 2 and results[-1] < 0.001): # 1/10 of 1%
         results.pop()
 
     return results
