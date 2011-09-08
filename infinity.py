@@ -92,10 +92,6 @@ def armor_save_with_special_ammo(hits, damage, ammo):
         for i in range(len(results)-1, 0, -1):
             results.insert(i, 0) # double damage by inserting zeros for all the odd positions
 
-    # prune very low probabily results off the end
-    while (len(results) > 2 and results[-1] < 0.001): # 1/10 of 1%
-        results.pop()
-
     return results
 
 
@@ -193,6 +189,22 @@ def ftf_1vN_roll_with_crits(defender_target, attacker_dice, attacker_target):
     return [nothing_happens, [defender_hits], attacker_hits]
 
 
+def gather_crits(roll):
+    hit = 0
+    crit = 0
+    for hits in range(1, len(roll)):
+        hit += roll[hits][0]
+        for crits in range(1, hits+1):
+            crit += roll[hits][crits]
+    return [roll[0][0], hit, crit]
+
+
+def ignore_crits(roll):
+    successes = sum(sum(roll[i]) for i in range(1, len(roll)))
+
+    return roll[0][0], successes
+
+
 def ftf_1vN_roll_and_save(defender_target, defender_damage, defender_ammo,
                           attacker_dice, attacker_target,
                           attacker_damage, attacker_ammo):
@@ -203,4 +215,67 @@ def ftf_1vN_roll_and_save(defender_target, defender_damage, defender_ammo,
 
     no_wounds = hits[0] + defender_wounds[0] + attacker_wounds[0]
 
-    return [[no_wounds], defender_wounds[1:], attacker_wounds[1:]]
+    return no_wounds, defender_wounds[1:], attacker_wounds[1:]
+
+
+def resolve_test(attacker_action, attacker_dice,
+                 attacker_target, attacker_target_mod,
+                 attacker_damage, attacker_ammo,
+                 attacker_armor, attacker_cover,
+                 defender_action,
+                 defender_target, defender_target_mod,
+                 defender_damage, defender_ammo,
+                 defender_armor, defender_cover):
+
+    a_dice = attacker_dice if attacker_action == "attack" else 1
+    d_cover = 0 if attacker_action != "attack" or not defender_cover else 3
+    a_cover = 0 if defender_action != "attack" or not attacker_cover else 3
+    d_target = defender_target + defender_target_mod - a_cover
+    a_target = attacker_target + attacker_target_mod - d_cover
+    d_armor = (defender_armor if attacker_ammo < AP_AMMO
+               else (defender_armor + 1) // 2)
+    a_armor = (attacker_armor if defender_ammo < AP_AMMO
+               else (attacker_armor + 1) // 2)
+    d_damage = defender_damage - a_armor - a_cover
+    a_damage = attacker_damage - d_armor - d_cover
+
+    #logging.warn([d_target, d_damage, defender_ammo,
+    #             attacker_dice, a_target, a_damage, attacker_ammo])
+
+    a_action = attacker_action
+    d_action = defender_action
+
+    if defender_action == "nothing":
+        if attacker_action == "attack":
+            roll = normal_roll_and_save(a_dice, a_target,
+                                        a_damage, attacker_ammo)
+        
+        elif attacker_action == "dodge":
+            roll = normal_roll(1, a_target)
+
+        else: # attacker_action == "hack"
+            roll = gather_crits(normal_roll_with_crits(1, a_target))
+            
+        return roll[0], [], roll[1:]
+    
+    else: # face to face roll of some kind
+        roll = ftf_1vN_roll_with_crits(d_target, a_dice, a_target)
+
+        if defender_action == "attack":
+            defender_results = armor_save_with_special_ammo([[0]] + roll[1], d_damage, defender_ammo)
+        elif defender_action == "dodge":
+            defender_results = ignore_crits([[0]] + roll[1])
+        else: # defender_action == "hack"
+            defender_results = gather_crits([[0]] + roll[1])
+
+        if attacker_action == "attack":
+            attacker_results = armor_save_with_special_ammo([[0]] + roll[2], a_damage, attacker_ammo)
+        elif attacker_action == "dodge":
+            attacker_results = ignore_crits([[0]] + roll[2])
+        else: # attacker_action == "hack"
+            attacker_results = gather_crits([[0]] + roll[2])
+
+        nothing_happens = roll[0] + defender_results[0] + attacker_results[0]
+
+        return nothing_happens, defender_results[1:], attacker_results[1:]
+            

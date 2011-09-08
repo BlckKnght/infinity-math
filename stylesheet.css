@@ -8,7 +8,6 @@ a:hover {
 }
 body {
 	font-family: sans;
-    font-size: 14px;
     background-color: #A7CCE8;
 	margin: 0px;
 }
@@ -20,33 +19,58 @@ body {
 }
 
 #title {
-    font-size: 24px;
+    font-size: 1.5em;
     font-weight: bold;
 }
 
 #subtitle {
-    font-size: 18px;
+    font-size: 1.25em;
     font-weight: bold;
 }
 
 .model {
     float: left;
-    margin-right: 10px;
+    width: 415;
+    padding: 10px;
+    padding-right: 0;
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
-#calculate { clear: both; }
+.model p { margin-bottom: 0; }
+
+#calculate {
+    clear: both;
+    margin: 5px;
+}
+
+#results {
+    padding: 10px;
+}
 
 #key {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    width: 100%;
+    max-width: 830px;
+    padding: 20px;
+    border-collapse: collapse;
+}
+
+td, th {
+    text-align: left;
+    border: 1px solid black;
+    padding: 5px;
 }
 
 #key div {
     display: inline-block;
-    width: 14px;
-    height: 14px;
+    width: 100%;
+    height: 1em;
+}
+
+#chart {
+    margin: 10px 0px;
+    width: 100%;
+    max-width: 830px;
 }
 
 #chart div {
@@ -58,7 +82,7 @@ body {
 .d2 { background-color: #d0483d; }
 .d3 { background-color: #e67158; }
 
-.draw { background-color: #dcdcdc; }
+.draw { background-color: #ffffff; }
 
 .a1  { background-color: #3a4cc0; }
 .a2  { background-color: #465dcf; }
@@ -72,3 +96,5 @@ body {
 .a10 { background-color: #b3ccfa; }
 .a11 { background-color: #c0d3f5; }
 .a12 { background-color: #ccd8ed; }
+
+.hidden { display: none; }
