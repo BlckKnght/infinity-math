@@ -8,5 +8,13 @@ handlers:
   static_files: \1
   upload: (.*\.(js|css|png|gif|jpg))
   
+- url: /(google.*\.html)
+  static_files: \1
+  upload: google.*\.html
+  
+- url: /(robots.txt)
+  static_files: \1
+  upload: robots.txt
+  
 - url: /.*
   script: main.py
