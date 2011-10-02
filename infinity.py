@@ -24,7 +24,7 @@ def normal_roll(dice, target):
     if target <= 0: # a negative target number means you always fail
         return [1] + [0]*dice # return a list with a 1 followed by "dice" 0s
 
-    success_odds = target / 20 # odds of succeeding on each die
+    success_odds = min((target, 20)) / 20 # odds of succeeding on each die
     successes = []
 
     # the odds of success follow a binomial distribution
@@ -50,7 +50,7 @@ def normal_roll_with_crits(dice, target):
         return [[1]] + [[0]*(d+2) for d in range(dice)]
 
     successes = normal_roll(dice, target) # calculate results without crits
-    crit_odds = 1/target # odds of any given success being a crit
+    crit_odds = max((1/target, (target-19)/20)) # odds of a success being a crit
     results = []
     
     # number of crits (for a number of successes) is a binomial distribution
