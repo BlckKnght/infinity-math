@@ -1,7 +1,12 @@
 application: infinity-math
-version: 5
-runtime: python
+version: 6
+runtime: python27
 api_version: 1
+threadsafe: true
+
+libraries:
+- name: django
+  version: "1.2"
 
 handlers:
 - url: /(.*\.(js|css|png|gif|jpg))
@@ -17,4 +22,4 @@ handlers:
   upload: robots.txt
   
 - url: /.*
-  script: main.py
+  script: main.app

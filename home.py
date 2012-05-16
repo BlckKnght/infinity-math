@@ -1,6 +1,6 @@
 # home.py
 
-from google.appengine.ext import webapp
+import webapp2 as webapp
 from google.appengine.ext.webapp import template
 import logging
 
