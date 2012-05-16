@@ -129,13 +129,13 @@
             <strong>Results:</strong>
             <div id="chart">
                 {% spaceless %}
-                {% for r in defender_results reversed %}
-                    <div class="d{{ forloop.counter }}" style="width: {{ r|stringformat:".2f" }}%;"
+                {% for r in attacker_results reversed %}
+                    <div class="a{{ forloop.counter }}" style="width: {{ r|stringformat:".2f" }}%;"
                          title="{{ r|stringformat:".2f" }}%"></div>
                 {% endfor %}
                 <div class="draw" style="width : {{ draw|stringformat:".2f" }}%;" title="{{ draw|stringformat:".2f" }}%"></div>
-                {% for r in attacker_results %}
-                    <div class="a{{ forloop.revcounter }}" style="width: {{ r|stringformat:".2f" }}%;"
+                {% for r in defender_results %}
+                    <div class="d{{ forloop.revcounter }}" style="width: {{ r|stringformat:".2f" }}%;"
                          title="{{ r|stringformat:".2f" }}%"></div>
                 {% endfor %}
                 {% endspaceless %}
@@ -146,11 +146,11 @@
                     <th>Outcome</th>
                     <th>Probability</th>
                 </tr>
-                {% for r in defender_results reversed %}
+                {% for r in attacker_results reversed %}
                 <tr>
-                    <td><div class="d{{ forloop.counter }}"></div></td>
-                    {% ifequal defender_action "attack" %}<td>The first model receives {{ forloop.revcounter }} wound{{ forloop.revcounter|pluralize }}</td>
-                    {% else %}{% if forloop.last %}<td>The second model's action succeeds.</td>{% else %}<td>The second model's action critically succeeds.</td>{% endif %}{% endifequal %}
+                    <td><div class="a{{ forloop.counter }}"</td>
+                    {% ifequal attacker_action "attack" %}<td>The second model receives {{ forloop.revcounter }} wound{{ forloop.revcounter|pluralize }}</td>
+                    {% else %}{% if forloop.last %}<td>The first model succeeds.</td>{% else %}<td>The first model's action critically succeeds.</td>{% endif %}{% endifequal %}
                     <td>{{ r|stringformat:".2f" }}%</td>
                 </tr>
                 {% endfor %}
@@ -159,11 +159,11 @@
                     <td>Nothing happens.</td>
                     <td>{{ draw|stringformat:".2f" }}%</td>
                 </tr>
-                {% for r in attacker_results %}
+                {% for r in defender_results %}
                 <tr>
-                    <td><div class="a{{ forloop.revcounter }}"</td>
-                    {% ifequal attacker_action "attack" %}<td>The second model receives {{ forloop.counter }} wound{{ forloop.counter|pluralize }}</td>
-                    {% else %}{% if forloop.first %}<td>The first model succeeds.</td>{% else %}<td>The first model's action critically succeeds.</td>{% endif %}{% endifequal %}
+                    <td><div class="d{{ forloop.revcounter }}"></div></td>
+                    {% ifequal defender_action "attack" %}<td>The first model receives {{ forloop.counter }} wound{{ forloop.counter|pluralize }}</td>
+                    {% else %}{% if forloop.first %}<td>The second model's action succeeds.</td>{% else %}<td>The second model's action critically succeeds.</td>{% endif %}{% endifequal %}
                     <td>{{ r|stringformat:".2f" }}%</td>
                 </tr>
                 {% endfor %}
