@@ -77,4 +77,4 @@ class HomeHandler(webapp.RequestHandler):
         
         #logging.info(args)
         
-        self.response.out.write(template.render("home.html", args))
+        self.response.out.write(template.render("templates/home.html", args))
